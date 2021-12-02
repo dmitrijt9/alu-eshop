@@ -1,4 +1,25 @@
 parameters:
+    mailFrom:
+        email: 'tkad06@vse.cz'
+        name: 'AluShop'
+
+#    Do not expose prod values here!
+    database:
+        driver: mysqli
+        host: localhost
+        username: xname
+        password: heslokdatabazi
+        database: xname
+        charset: utf8mb4
+
+#    Do not expose prod values here!
+    facebook:
+        appId: 'TODO'
+        secret: 'TODO'
+
+php:
+	date.timezone: Europe/Prague
+	error_reporting: E_ALL &~E_USER_WARNING
 
 application:
 	errorPresenter: Front:Error
