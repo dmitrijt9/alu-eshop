@@ -1,25 +1,4 @@
 parameters:
-    mailFrom:
-        email: 'tkad06@vse.cz'
-        name: 'AluShop'
-
-#    Do not expose prod values here!
-    database:
-        driver: mysqli
-        host: localhost
-        username: xname
-        password: heslokdatabazi
-        database: xname
-        charset: utf8mb4
-
-#    Do not expose prod values here!
-    facebook:
-        appId: 'TODO'
-        secret: 'TODO'
-
-php:
-	date.timezone: Europe/Prague
-	error_reporting: E_ALL &~E_USER_WARNING
 
 application:
 	errorPresenter: Front:Error
@@ -47,6 +26,7 @@ services:
 	- App\Model\Api\Facebook\FacebookApi(%facebook.appId%, %facebook.secret%)
 
 	- App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
+	- App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
 
 	- App\FrontModule\Components\UserLoginForm\UserLoginFormFactory
 	- App\FrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
@@ -55,14 +35,18 @@ services:
 	    setup:
 	        - setMailFrom(%mailFrom.email%,%mailFrom.name%)
 	- App\FrontModule\Components\NewPasswordForm\NewPasswordFormFactory
+	- App\FrontModule\Components\ProductCartForm\ProductCartFormFactory
+	- App\FrontModule\Components\CartControl\CartControlFactory
 	- App\FrontModule\Components\UserLoginControl\UserLoginControlFactory
 
 	- App\Model\Facades\CategoriesFacade
+	- App\Model\Facades\ProductsFacade
 	- App\Model\Facades\UsersFacade
 
 	- App\Model\Repositories\CategoryRepository
 	- App\Model\Repositories\ForgottenPasswordRepository
 	- App\Model\Repositories\PermissionRepository
+	- App\Model\Repositories\ProductRepository
 	- App\Model\Repositories\ResourceRepository
 	- App\Model\Repositories\RoleRepository
 	- App\Model\Repositories\UserRepository
