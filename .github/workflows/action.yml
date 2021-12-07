@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Remove temp from remote server
         # path to deletefile to remove files from cache
-        run: curl https://eso.vse.cz/\~tkad06/deleteCacheDir.php
+        run: curl https://eso.vse.cz/\~tkad06/alushop/deleteCacheDir.php
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
