@@ -2,6 +2,9 @@
 
 namespace App\FrontModule\Components\CartControl;
 
+use App\Model\Entities\Cart;
+use App\Model\Facades\CartFacade;
+use App\Model\Facades\UsersFacade;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Template;
 use Nette\Http\Session;
@@ -15,6 +18,47 @@ class CartControl extends Control{
   /** @var User $user */
   private $user;
 
+    /** @var CartFacade $cartFacade */
+    private $cartFacade;
+
+    /** @var UsersFacade $usersFacade */
+    private $usersFacade;
+
+    /** @var Cart $cart */
+    private $cart;
+
+    /**
+     * UserLoginControl constructor.
+     * @param User $user
+     * @param Session $session
+     * @param CartFacade $cartFacade
+     */
+    public function __construct(User $user, Session $session, CartFacade $cartFacade, UsersFacade $usersFacade){
+        $this->user=$user;
+        $this->cartFacade = $cartFacade;
+        $this->usersFacade = $usersFacade;
+        $cartSession=$session->getSection('cart');
+
+        $cartId = $cartSession->get('cartId');
+
+        try {
+            $this->cart=$this->cartFacade->getCartById($cartId);
+
+            if ($user->isLoggedIn() && $this->cart->user->userId != $user->id) {
+                if ($this->cart->getTotalCount() > 0) {
+                    $this->cartFacade->deleteCartByUser($user->id);
+                    $this->cart->user = $this->usersFacade->getUser($user->id);
+                    $this->cartFacade->saveCart($this->cart);
+                }
+            }
+        } catch (\Exception $e) {
+            if($user->isLoggedIn()) {
+                // @todo
+            }
+        }
+
+    }
+
   /**
    * Akce renderující šablonu s odkazem pro zobrazení harmonogramu na desktopu
    * @param array $params = []
@@ -22,19 +66,6 @@ class CartControl extends Control{
   public function render($params=[]):void {
     $template=$this->prepareTemplate('default');
     $template->render();
-  }
-
-
-  /**
-   * UserLoginControl constructor.
-   * @param User $user
-   * @param Session $session
-   */
-  public function __construct(User $user, Session $session){
-    $this->user=$user;
-    $cartSession=$session->getSection('cart');
-
-    //TODO načtení košíku pro aktuálního uživatele či vytvoření nového
   }
 
   /**
