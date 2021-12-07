@@ -1,0 +1,45 @@
+name: Deployment to Master
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy_job:
+    runs-on: ubuntu-latest
+    name: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Remove temp from remote server
+        # path to deletefile to remove files from cache
+        run: curl https://eso.vse.cz/\~tkad06/deleteCacheDir.php
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: "eso.vse.cz"
+          username: "tkad06"
+          # v repozitáři musí být secret SSH_PRIVATE_KEY, v kterém bude privátní klíč bez hesla, odpovídající veřejný klíč musí být nahraný na eso
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          # cd do rootu projektu
+          script: |
+            cd public_html/alushop
+            rm -rf ./*
+            mkdir log
+            chmod 777 log
+            mkdir temp
+            chmod 777 temp
+
+      - name: copy file via ssh
+        uses: appleboy/scp-action@master
+        with:
+          host: "eso.vse.cz"
+          username: "tkad06"
+          port: 22
+          # stejný klíč jako v předchozím kroku
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "./*"
+          #cesta k rootu projektu
+          target: "/home/tkad06/public_html/alushop"
