@@ -25,14 +25,14 @@ class CartFacade{
       return $this->cartRepository->find($id);
   }
 
-  public function getCartByUser(User|int $user): Cart {
+  public function getCartByUser($user): Cart {
       if ($user instanceof User) {
           $user = $user->userId;
       }
       $this->cartRepository->findBy(['user_id'=>$user]);
   }
 
-  public function deleteCartByUser(User|int $user) {
+  public function deleteCartByUser($user) {
       if ($user instanceof User) {
           $user = $user->userId;
       }
