@@ -26,11 +26,12 @@ jobs:
           # cd do rootu projektu
           script: |
             cd public_html/alushop
-            rm -rf ./*
-            mkdir log
-            chmod 777 log
-            mkdir temp
-            chmod 777 temp
+            rm -rf ./src/*
+            mkdir ./src/log
+            chmod 777 ./src/log
+            mkdir ./src/temp
+            chmod 777 ./src/temp
+            cp ./local.neon ./src/config/local.neon
 
       - name: copy file via ssh
         uses: appleboy/scp-action@master
@@ -41,5 +42,5 @@ jobs:
           # stejný klíč jako v předchozím kroku
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./*"
-          #cesta k rootu projektu
-          target: "/home/tkad06/public_html/alushop"
+          #cesta ke zdrojaku projektu
+          target: "/home/tkad06/public_html/alushop/src"
