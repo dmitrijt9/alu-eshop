@@ -1,4 +1,4 @@
-name: Deployment to Main
+name: Deployment to ESO
 
 on:
   push:
