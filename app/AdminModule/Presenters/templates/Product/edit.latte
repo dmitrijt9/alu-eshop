@@ -3,4 +3,9 @@
 
 <h1 n:block="title">Úprava produktu {$product->title}</h1>
 
+<div class="my-4">
+    <img class="img-thumbnail w-25" src="/img/products/{$product->productId}.jpeg" alt="{$product->title}">
+</div>
+
+
 {control productEditForm}
