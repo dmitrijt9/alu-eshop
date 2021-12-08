@@ -141,6 +141,20 @@ class ProductEditForm extends Form{
           }
         }
 
+        // ulozeni kategorie
+        if (!empty($values['categoryId'])) {
+            try{
+               $category = $this->categoriesFacade->getCategory($values['categoryId']);
+               if (!$category) {
+                   throw new \Exception("Not found");
+               }
+               $product->category = $category;
+               $this->productsFacade->saveProduct($product);
+            }catch (\Exception $e){
+                $this->onFailed('Nepodarilo se ziskat kategorii.');
+            }
+        }
+
         $this->onFinished('Produkt byl uložen.');
       };
     $this->addSubmit('storno','zrušit')
