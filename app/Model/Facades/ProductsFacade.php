@@ -114,6 +114,7 @@ class ProductsFacade{
      */
     public function deleteProduct(Product &$product):bool {
         try{
+            unlink(__DIR__.'/../../../www/img/products/'.$product->productId.'.'.$product->photoExtension);
             return (bool)$this->productRepository->delete($product);
         }catch (\Exception $e){
             return false;
