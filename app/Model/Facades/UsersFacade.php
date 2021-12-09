@@ -54,6 +54,16 @@ class UsersFacade{
     return $this->userRepository->find($id);
   }
 
+    /**
+     * Metoda pro vyhledání uživatelů
+     * @param array|null $params = null
+     * @param int $offset = null
+     * @param int $limit = null
+     * @return User[]
+     */
+    public function findUsers(array $params=null,int $offset=null,int $limit=null):array {
+        return $this->userRepository->findAllBy($params,$offset,$limit);
+    }
   /**
    * Metoda pro načtení jednoho uživatele podle e-mailu
    * @param string $email
@@ -192,4 +202,18 @@ class UsersFacade{
     return $this->permissionRepository->findAll();
   }
   #endregion metody pro authorizator
+
+    /**
+     * Metoda pro smazání uživatele
+     * @param User $user
+     * @return bool
+     */
+    public function deleteUser(User $user):bool {
+        try{
+            return (bool)$this->userRepository->delete($user);
+        }catch (\Exception $e){
+            return false;
+        }
+    }
+
 }

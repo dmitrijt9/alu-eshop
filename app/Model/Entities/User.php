@@ -14,6 +14,12 @@ use LeanMapper\Entity;
  * @property string|null $facebookId = null
  * @property string|null $password = null
  */
-class User extends Entity{
+class User extends Entity implements \Nette\Security\Resource{
 
+    /**
+     * @inheritDoc
+     */
+    function getResourceId():string{
+        return 'User';
+    }
 }
