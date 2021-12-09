@@ -6,20 +6,23 @@
         <table class="table table-hover mt-4">
             <thead>
                 <tr>
-                    <th scope="col">Obrázek</th>
+{*                    <th scope="col">Obrázek</th>*}
                     <th scope="col">Název produktu</th>
+                    <th scope="col">Popis produktu</th>
                     <th scope="col" class="col-xl-1 col-md-2">Akce</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach $products as $product}
                     <tr>
-                        <td class="align-middle" style="width: 15%">
-                            <img class="img-fluid img-thumbnail" src="/img/products/{$product->productId}.{$product->photoExtension}" alt="{$product->title}">
-                        </td>
+{*                        <td class="align-middle" style="width: 15%">*}
+{*                            <img class="img-fluid img-thumbnail" src="/img/products/{$product->productId}.{$product->photoExtension}" alt="{$product->title}">*}
+{*                        </td>*}
                         <td class="align-middle">{$product->title}</td>
+                        <td>{$product->description|slice: 0, 50}{if ($product->description|length) > 50}...{/if}</td>
                         <td class="text-nowrap align-middle">
                             <a href="{link edit id=>$product->productId}" class="btn btn-sm btn-outline-primary">upravit</a>
+                            <a href="{link delete id=>$product->productId}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($category,'delete')}disabled{/if}">smazat</a>
                         </td>
                     </tr>
                 {/foreach}

@@ -107,6 +107,18 @@ class ProductsFacade{
     }
   }
 
+    /**
+     * Metoda pro smazání produktu
+     * @param Product $product
+     * @return bool
+     */
+    public function deleteProduct(Product &$product):bool {
+        try{
+            return (bool)$this->productRepository->delete($product);
+        }catch (\Exception $e){
+            return false;
+        }
+    }
 
   public function __construct(ProductRepository $productRepository){
     $this->productRepository=$productRepository;

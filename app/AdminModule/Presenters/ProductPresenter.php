@@ -45,6 +45,33 @@ class ProductPresenter extends BasePresenter{
     $this->template->product=$product;
   }
 
+    /**
+     * Akce pro smazání produktu
+     * @param int $id
+     * @throws \Nette\Application\AbortException
+     */
+    public function actionDelete(int $id):void {
+        try{
+            $product=$this->productsFacade->getProduct($id);
+        }catch (\Exception $e){
+            $this->flashMessage('Požadovaný produkt nebyla nalezena.', 'error');
+            $this->redirect('default');
+        }
+
+        if (!$this->user->isAllowed($category,'delete')){
+            $this->flashMessage('Tento produkt není možné smazat.', 'error');
+            $this->redirect('default');
+        }
+
+        if ($this->productsFacade->deleteProduct($product)){
+            $this->flashMessage('Produkt byl smazán.', 'info');
+        }else{
+            $this->flashMessage('Tento produkt není možné smazat.', 'error');
+        }
+
+        $this->redirect('default');
+    }
+
   /**
    * Formulář na editaci produktů
    * @return ProductEditForm
