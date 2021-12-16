@@ -13,3 +13,22 @@
         </div>
     {/foreach}
 </section>
+
+<div class="pagination">
+    {if !$paginator->isFirst()}
+        <a n:href="list, 1">První</a>
+        &nbsp;|&nbsp;
+        <a n:href="list, $paginator->page-1">Předchozí</a>
+        &nbsp;|&nbsp;
+    {/if}
+
+        Stránka {$paginator->getPage()} z {$paginator->getPageCount()}
+
+	{if !$paginator->isLast()}
+        &nbsp;|&nbsp;
+        <a n:href="list, $paginator->getPage() + 1">Další</a>
+        &nbsp;|&nbsp;
+        <a n:href="list, $paginator->getPageCount()">Poslední</a>
+    {/if}
+</div>
+

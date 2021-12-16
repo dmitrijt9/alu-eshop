@@ -5,6 +5,7 @@ namespace App\FrontModule\Presenters;
 use App\FrontModule\Components\ProductCartForm\ProductCartFormFactory;
 use App\Model\Facades\ProductsFacade;
 use Nette\Application\BadRequestException;
+use Nette\Utils\Paginator;
 
 /**
  * Class ProductPresenter
@@ -38,9 +39,16 @@ class ProductPresenter extends BasePresenter{
   /**
    * Akce pro vykreslení přehledu produktů
    */
-  public function renderList():void {
-    //TODO tady by mělo přibýt filtrování podle kategorie, stránkování atp.
-    $this->template->products = $this->productsFacade->findProducts(['order'=>'title']);
+  public function renderList(int $page = 1):void {
+    $productsCount = $this->productsFacade->findProductsCount();
+
+    $paginator = new Paginator();
+    $paginator->setItemCount($productsCount);
+    $paginator->setItemsPerPage(10);
+    $paginator->setPage($page);
+
+    $this->template->products = $this->productsFacade->findProducts(['order'=>'title'], $paginator->getOffset(), $paginator->getLength());
+    $this->template->paginator = $paginator;
   }
 
   #region injections
