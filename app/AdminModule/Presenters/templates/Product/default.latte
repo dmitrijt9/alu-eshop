@@ -19,7 +19,7 @@
                         <td>{$product->description|slice: 0, 50}{if ($product->description|length) > 50}...{/if}</td>
                         <td class="text-nowrap align-middle">
                             <a href="{link edit id=>$product->productId}" class="btn btn-sm btn-outline-primary">upravit</a>
-                            <a href="{link delete id=>$product->productId}" class="btn btn-sm btn-outline-danger {if !$user->isAllowed($category,'delete')}disabled{/if}">smazat</a>
+                            <a n:if="$user->isAllowed($product,'delete')" href="{link delete id=>$product->productId}" class="btn btn-sm btn-outline-danger">smazat</a>
                         </td>
                     </tr>
                 {/foreach}
