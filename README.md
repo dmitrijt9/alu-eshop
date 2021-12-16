@@ -21,3 +21,9 @@ See credentials in `docker-compose.yml` file.
 
 Then, just run sql scripts in `migrations/` folder one after one (or just some of them if you have already run some of them).
 
+## Dev
+
+Run local php server to serve Nette app on port 8000:
+```shell
+php -S localhost:8000 -t www
+```
