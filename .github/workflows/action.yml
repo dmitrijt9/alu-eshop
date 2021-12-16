@@ -31,8 +31,6 @@ jobs:
             chmod 777 ./src/log
             mkdir ./src/temp
             chmod 777 ./src/temp
-            mkdir ./src/www/img/products
-            chmod 777 ./src/www/img/products
 
       - name: copy file via ssh
         uses: appleboy/scp-action@master
@@ -58,5 +56,7 @@ jobs:
             cd public_html/alushop
             cp ./local.neon ./src/config/
             cd ./src
+            mkdir ./www/img/products
+            chmod 777 ./www/img/products
             composer install
 
