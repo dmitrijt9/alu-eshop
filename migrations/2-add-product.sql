@@ -53,3 +53,9 @@ ALTER TABLE `product`
 --
 INSERT INTO `resource` (`resource_id`) VALUES ('Product'), ('Admin:Product');
 INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `type`) VALUES (NULL, 'admin', 'Product', '', 'allow'), (NULL, 'admin', 'Admin:Product', '', 'allow');
+
+--
+-- Vložení nových záznamů pro ACL
+--
+INSERT INTO `resource` (`resource_id`) VALUES ('Front:Product');
+INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `type`) VALUES (NULL, 'guest', 'Front:Product', 'list', 'allow'), (NULL, 'guest', 'Front:Product', 'show', 'allow'), (NULL, 'authenticated', 'Front:Product', 'list', 'allow'), (NULL, 'authenticated', 'Front:Product', 'show', 'allow');
