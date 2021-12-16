@@ -5,8 +5,11 @@
 
 <section class="row" n:if="!empty($products)">
     {foreach $products as $product}
-        <div class="col-md-6 col-lg-4 my-2 card">
+        <div class="col-md-6 col-lg-4 my-2 card px-2 py-4 m-2">
             <a href="{plink Product:show url=>$product->url}" class="h4">{$product->title}</a>
+            <span>Kategorie: {$product->category->title}</span>
+            <span class="fs-4 fw-bold">Cena: {$product->price} Kč</span>
+            <a href="{plink Product:show url=>$product->url}" class="btn btn-primary mt-2">Vložit do košíku</a>
         </div>
     {/foreach}
 </section>
