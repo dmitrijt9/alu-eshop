@@ -1,4 +1,31 @@
+{varType App\Model\Entities\Product[] $products}
+{var $filteredProducts = array_filter($products, function($p) {
+    return $p->photoExtension != '';
+})}
 {block content}
-TODO tady bude nějaký obsah e-shopu :)
+<div class="w-75 mx-auto" >
+    <div id="productsCarousel" class="carousel slide container" data-ride="carousel">
+        <div class="carousel-inner">
+            <div  class="carousel-item active" style="max-height: 100vh;height: 300px;">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">Alu Shop</h1>
+                        <p class="lead">Nejlepší e-shop s luxusními alu koly v ČR.</p>
+                    </div>
+                </div>
+            </div>
+            <div n:foreach="$filteredProducts as $p"  class="carousel-item relative" style="max-height: 100vh;height: 300px;">
+                <img class="d-block relative w-100 h-100" src="/img/products/{$p->productId}.{$p->photoExtension}" alt="{$p->title}" style="object-fit: contain">
+            </div>
+        </div>
+    </div>
+</div>
 
-<a href="{plink Product:list}">Pracovní výpis produktů</a>
+<div class="container mt-4">
+    <h2 class="display-3">Nabídka kol</h2>
+    <div class="row">
+        <div n:foreach="$filteredProducts as $p"  class="col-sm border border-primary rounded m-4">
+            {$p->title}
+        </div>
+    </div>
+</div>
