@@ -36,6 +36,9 @@
 				<li n:class="$presenter->isLinkCurrent('Category:*')?active, nav-item" n:if="$user->isAllowed('Admin:Category','default')">
 					<a class="nav-link" href="{plink Category:default}">Kategorie</a>
 				</li>
+				<li n:class="$presenter->isLinkCurrent('WheelSize:*')?active, nav-item" n:if="$user->isAllowed('Admin:WheelSize','default')">
+					<a class="nav-link" href="{plink WheelSize:default}">Velikosti kol</a>
+				</li>
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
