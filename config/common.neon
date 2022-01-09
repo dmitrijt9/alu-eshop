@@ -27,6 +27,7 @@ services:
 
 	- App\AdminModule\Components\CategoryEditForm\CategoryEditFormFactory
 	- App\AdminModule\Components\ProductEditForm\ProductEditFormFactory
+	- App\AdminModule\Components\WheelSizeEditForm\WheelSizeEditFormFactory
 
 	- App\FrontModule\Components\UserLoginForm\UserLoginFormFactory
 	- App\FrontModule\Components\UserRegistrationForm\UserRegistrationFormFactory
@@ -40,6 +41,8 @@ services:
 	- App\FrontModule\Components\UserLoginControl\UserLoginControlFactory
 
 	- App\Model\Facades\CategoriesFacade
+	- App\Model\Facades\WheelSizesFacade
+	- App\Model\Facades\WheelColorsFacade
 	- App\Model\Facades\ProductsFacade
 	- App\Model\Facades\UsersFacade
 	- App\Model\Facades\CartFacade
@@ -53,3 +56,5 @@ services:
 	- App\Model\Repositories\UserRepository
 	- App\Model\Repositories\CartRepository
 	- App\Model\Repositories\CartItemRepository
+	- App\Model\Repositories\WheelSizeRepository
+	- App\Model\Repositories\WheelColorRepository

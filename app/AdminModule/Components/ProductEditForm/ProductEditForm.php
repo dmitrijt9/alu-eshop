@@ -5,6 +5,8 @@ namespace App\AdminModule\Components\ProductEditForm;
 use App\Model\Entities\Product;
 use App\Model\Facades\CategoriesFacade;
 use App\Model\Facades\ProductsFacade;
+use App\Model\Facades\WheelColorsFacade;
+use App\Model\Facades\WheelSizesFacade;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SubmitButton;
@@ -32,6 +34,10 @@ class ProductEditForm extends Form{
   public $onCancel = [];
   /** @var CategoriesFacade */
   private $categoriesFacade;
+  /** @var WheelSizesFacade */
+  private $wheelSizesFacade;
+  /** @var WheelColorsFacade */
+  private $wheelColorsFacade;
   /** @var ProductsFacade $productsFacade */
   private $productsFacade;
 
@@ -42,11 +48,13 @@ class ProductEditForm extends Form{
    * @param ProductsFacade $productsFacade
    * @noinspection PhpOptionalBeforeRequiredParametersInspection
    */
-  public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, CategoriesFacade $categoriesFacade, ProductsFacade $productsFacade){
+  public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, CategoriesFacade $categoriesFacade, ProductsFacade $productsFacade, WheelSizesFacade $wheelSizesFacade, WheelColorsFacade $wheelColorsFacade){
     parent::__construct($parent, $name);
     $this->setRenderer(new Bs4FormRenderer(FormLayout::VERTICAL));
     $this->categoriesFacade=$categoriesFacade;
     $this->productsFacade=$productsFacade;
+    $this->wheelSizesFacade=$wheelSizesFacade;
+    $this->wheelColorsFacade=$wheelColorsFacade;
     $this->createSubcomponents();
   }
 
@@ -80,6 +88,27 @@ class ProductEditForm extends Form{
       ->setPrompt('--vyberte kategorii--')
       ->setRequired(false);
     #endregion kategorie
+    #region velikost
+    $wheelSizes=$this->wheelSizesFacade->findWheelSizes();
+    $wheelSizesArr=[];
+    foreach ($wheelSizes as $wheelSize){
+      $wheelSizesArr[$wheelSize->wheelSizeId]=$wheelSize->size;
+    }
+    $this->addSelect('wheelSizeId','Velikost',$wheelSizesArr)
+      ->setPrompt('--vyberte velikost--')
+      ->setRequired(false);
+    #endregion velikost
+
+    #region barva
+    $wheelColors=$this->wheelColorsFacade->findWheelColors();
+    $wheelColorsArr=[];
+    foreach ($wheelColors as $wheelColor){
+      $wheelColors[$wheelColor->wheelColorId]=$wheelColor->color;
+    }
+    $this->addSelect('wheelColorId','Barva',$wheelColorsArr)
+      ->setPrompt('--vyberte barvu--')
+      ->setRequired(false);
+    #endregion barva
 
     $this->addTextArea('description', 'Popis produktu')
       ->setRequired('Zadejte popis produktu.');
@@ -155,6 +184,34 @@ class ProductEditForm extends Form{
             }
         }
 
+        // ulozeni valikosti
+        if (!empty($values['wheelSizeId'])) {
+            try{
+                $wheelSize = $this->wheelSizesFacade->getWheelSize($values['wheelSizeId']);
+                if ($wheelSize == null) {
+                    throw new \Exception("Not found");
+                }
+                $product->wheelSize = $wheelSize;
+                $this->productsFacade->saveProduct($product);
+            }catch (\Exception $e){
+                $this->onFailed('Nepodarilo se ziskat velikost.');
+            }
+        }
+
+        // ulozeni barvy
+        if (!empty($values['wheelColorId'])) {
+            try{
+                $wheelColor = $this->wheelColorsFacade->getWheelColor($values['wheelColorId']);
+                if (!$wheelColor) {
+                    throw new \Exception("Not found");
+                }
+                $product->wheelColor = $wheelColor;
+                $this->productsFacade->saveProduct($product);
+            }catch (\Exception $e){
+                $this->onFailed('Nepodarilo se ziskat barvu.');
+            }
+        }
+
         $this->onFinished('Produkt byl uložen.');
       };
     $this->addSubmit('storno','zrušit')
@@ -175,6 +232,8 @@ class ProductEditForm extends Form{
       $values = [
         'productId'=>$values->productId,
         'categoryId'=>$values->category?$values->category->categoryId:null,
+        'wheelSizeId'=>$values->wheelSize?$values-> wheelSize->wheelSizeId:null,
+        'wheelColorId'=>$values->wheelColor?$values->wheelColor->wheelColorId:null,
         'title'=>$values->title,
         'url'=>$values->url,
         'description'=>$values->description,

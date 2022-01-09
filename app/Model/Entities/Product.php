@@ -15,6 +15,8 @@ use LeanMapper\Entity;
  * @property string $photoExtension = ''
  * @property bool $available = true
  * @property Category|null $category m:hasOne
+ * @property WheelSize|null $wheelSize m:hasOne
+ * @property WheelColor|null $wheelColor m:hasOne
  */
 class Product extends Entity implements \Nette\Security\Resource{
 
