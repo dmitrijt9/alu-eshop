@@ -103,7 +103,7 @@ class ProductEditForm extends Form{
     $wheelColors=$this->wheelColorsFacade->findWheelColors();
     $wheelColorsArr=[];
     foreach ($wheelColors as $wheelColor){
-      $wheelColors[$wheelColor->wheelColorId]=$wheelColor->color;
+      $wheelColorsArr[$wheelColor->wheelColorId]=$wheelColor->color;
     }
     $this->addSelect('wheelColorId','Barva',$wheelColorsArr)
       ->setPrompt('--vyberte barvu--')
@@ -188,7 +188,7 @@ class ProductEditForm extends Form{
         if (!empty($values['wheelSizeId'])) {
             try{
                 $wheelSize = $this->wheelSizesFacade->getWheelSize($values['wheelSizeId']);
-                if ($wheelSize == null) {
+                if (!$wheelSize) {
                     throw new \Exception("Not found");
                 }
                 $product->wheelSize = $wheelSize;

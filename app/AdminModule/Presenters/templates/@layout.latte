@@ -39,6 +39,9 @@
 				<li n:class="$presenter->isLinkCurrent('WheelSize:*')?active, nav-item" n:if="$user->isAllowed('Admin:WheelSize','default')">
 					<a class="nav-link" href="{plink WheelSize:default}">Velikosti kol</a>
 				</li>
+				<li n:class="$presenter->isLinkCurrent('WheelColor:*')?active, nav-item" n:if="$user->isAllowed('Admin:WheelColor','default')">
+					<a class="nav-link" href="{plink WheelColor:default}">Barvy kol</a>
+				</li>
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
