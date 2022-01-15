@@ -4,28 +4,34 @@
 })}
 {block content}
 <div class="w-75 mx-auto" >
-    <div id="productsCarousel" class="carousel slide container" data-ride="carousel">
-        <div class="carousel-inner">
+    <div id="productsCarousel" class="carousel slide container mt-5" data-ride="carousel">
+        <div class="carousel-inner" style="padding: 0 70px">
             <div  class="carousel-item active" style="max-height: 100vh;height: 300px;">
-                <div class="jumbotron jumbotron-fluid">
-                    <div class="container">
-                        <h1 class="display-4">Alu Shop</h1>
-                        <p class="lead">Nejlepší e-shop s luxusními alu koly v ČR.</p>
+                <div class="jumbotron jumbotron-fluid h-100 alu-jumbotron">
+                    <div class="container py-4">
+                        <h1 class="display-4 text-center">Alu Shop</h1>
+                        <p class="lead text-center">Nejlepší e-shop s luxusními alu koly v ČR.</p>
                     </div>
                 </div>
             </div>
             <div n:foreach="$filteredProducts as $p"  class="carousel-item relative" style="max-height: 100vh;height: 300px;">
                 <img class="d-block relative w-100 h-100" src="/img/products/{$p->productId}.{$p->photoExtension}" alt="{$p->title}" style="object-fit: contain">
             </div>
+            <a class="carousel-control-prev" href="#productsCarousel" role="button" data-slide="prev"- style="width: 70px; background-color: #0000004f;">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </a>
+            <a class="carousel-control-next" href="#productsCarousel" role="button" data-slide="next" style="width: 70px; background-color: #0000004f;">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </a>
         </div>
     </div>
 </div>
 
-<div class="container mt-4">
-    <h2 class="display-3">Nabídka kol</h2>
-    <div class="row">
-        <div n:foreach="$filteredProducts as $p"  class="col-sm border border-primary rounded m-4">
-            {$p->title}
-        </div>
-    </div>
-</div>
+{*<div class="container mt-4">*}
+{*    <h2 class="display-3">Nabídka kol</h2>*}
+{*    <div class="row">*}
+{*        <div n:foreach="$filteredProducts as $p"  class="col-sm border border-primary rounded m-4">*}
+{*            {$p->title}*}
+{*        </div>*}
+{*    </div>*}
+{*</div>*}

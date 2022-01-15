@@ -1,8 +1,16 @@
 {varType App\Model\Entities\Product[] $products}
+{varType App\Model\Entities\WheelSize[] $wheelSizes}
+{varType App\Model\Entities\Category $category}
+{varType int $wheelSize}
 {block content}
 
-<h1 n:block="title">Nabízené produkty</h1>
+<h1 n:block="title">Kategorie: {$category->title}</h1>
 
+<div class="mr-3 d-flex"><span>Filtrovat dle velikosti: </span>
+    <div class="mx-2" n:foreach="$wheelSizes as $ws">
+        <a n:class="$wheelSize==$ws->wheelSizeId ? link-secondary : link-primary" href="{plink Product:list, categoryId=>$category->categoryId, wheelSize=>$ws->wheelSizeId }">{$ws->size}</a>
+    </div>
+</div>
 <section class="row" n:if="!empty($products)">
     {foreach $products as $product}
         <div class="col-md-6 col-lg-4 my-2 card px-2 py-4 m-2">

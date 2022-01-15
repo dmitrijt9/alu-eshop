@@ -6,6 +6,7 @@ use App\FrontModule\Components\CartControl\CartControl;
 use App\FrontModule\Components\CartControl\CartControlFactory;
 use App\FrontModule\Components\UserLoginControl\UserLoginControl;
 use App\FrontModule\Components\UserLoginControl\UserLoginControlFactory;
+use App\Model\Facades\CategoriesFacade;
 use Nette\Application\AbortException;
 use Nette\Application\ForbiddenRequestException;
 
@@ -18,8 +19,16 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter {
   private $userLoginControlFactory;
   /** @var CartControlFactory $cartControlFactory*/
   private $cartControlFactory;
+    /** @var CategoriesFacade $categoriesFacade */
+    private $categoriesFacade;
 
-  /**
+
+    public function __construct(CategoriesFacade $categoriesFacade)
+    {
+        $this->categoriesFacade=$categoriesFacade;
+    }
+
+    /**
    * @throws ForbiddenRequestException
    * @throws AbortException
    */
@@ -38,6 +47,11 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter {
       }
     }
   }
+
+  public function beforeRender() {
+      $categories = $this->categoriesFacade->findCategories();
+      $this->template->categories = $categories;
+}
 
   /**
    * Komponenta pro zobrazení údajů o aktuálním uživateli (přihlášeném či nepřihlášeném)
@@ -63,5 +77,6 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter {
   public function injectCartControlFactory(CartControlFactory $cartControlFactory):void {
     $this->cartControlFactory=$cartControlFactory;
   }
+
   #endregion injections
 }
