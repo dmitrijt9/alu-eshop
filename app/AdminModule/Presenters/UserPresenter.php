@@ -36,7 +36,7 @@ class UserPresenter extends BasePresenter{
             $this->redirect('default');
         }
 
-        if (!$this->user->isAllowed($user,'delete')){
+        if (!$this->user->isAllowed($user,'delete') || $this->user->getId() == $user->userId){
             $this->flashMessage('Tohoto uživatele není možné smazat.', 'error');
             $this->redirect('default');
         }
@@ -59,11 +59,11 @@ class UserPresenter extends BasePresenter{
         try{
             $user=$this->usersFacade->getUser($id);
         }catch (\Exception $e){
-            $this->flashMessage('Požadovaný produkt nebyl nalezen.', 'error');
+            $this->flashMessage('Požadovaný uživatel nebyl nalezen.', 'error');
             $this->redirect('default');
         }
         if (!$this->user->isAllowed($user,'edit')){
-            $this->flashMessage('Požadovaný produkt nemůžete upravovat.', 'error');
+            $this->flashMessage('Požadovaný uživatel nemůžete upravovat.', 'error');
             $this->redirect('default');
         }
 

@@ -51,6 +51,39 @@ class UserEditForm extends Form{
     }
 
     private function createSubcomponents(){
+        $this->addText('name','Jméno a příjmení:')
+            ->setRequired('Zadejte své jméno')
+            ->setHtmlAttribute('maxlength',40)
+            ->addRule(Form::MAX_LENGTH,'Jméno je příliš dlouhé, může mít maximálně 40 znaků.',40);
+        $this->addEmail('email','E-mail')
+            ->setRequired('Zadejte platný email')
+            ->addRule(function(Nette\Forms\Controls\TextInput $input){
+                try{
+                    $this->usersFacade->getUserByEmail($input->value);
+                }catch (\Exception $e){
+                    //pokud nebyl uživatel nalezen (tj. je vyhozena výjimka), je to z hlediska registrace v pořádku
+                    return true;
+                }
+                return false;
+            },'Uživatel s tímto e-mailem je již registrován.');
+        $this->addSelect('role', 'Role', ['admin' => 'admin', 'guest'=>'guest']);
+        $this->addSubmit('ok','uložit')
+            ->onClick[]=function(SubmitButton $button) {
+            $values = $this->getValues('array');
+            if (!empty($values['userId'])) {
+                try {
+                    $user = $this->usersFacade->getUser($values['userId']);
+                } catch (\Exception $e) {
+                    $this->onFailed('Požadovaný uživatel nebyl nalezen.');
+                    return;
+                }
+            } else {
+                $this->onFailed('Uživatele lze jen editovat.');
+                return;
+            }
+            $user->assign($values, ['name', 'email', 'role']);
+            $this->usersFacade->saveUser($user);
+        };
     }
 
     /**
@@ -60,6 +93,15 @@ class UserEditForm extends Form{
      * @return $this
      */
     public function setDefaults($values, bool $erase = false):self {
+        if ($values instanceof User){
+            $values = [
+                'name'=>$values->name,
+                'email'=>$values->email,
+                'role'=>$values->role->roleId,
+            ];
+        }
+        parent::setDefaults($values, $erase);
+        return $this;
     }
 
 }
