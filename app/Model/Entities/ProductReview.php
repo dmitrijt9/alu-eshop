@@ -10,8 +10,8 @@ use LeanMapper\Entity;
  * @property int $productReviewId
  * @property string $text
  * @property int $stars
- * @property-read Product $product m:hasOne
- * @property-read User $author m:hasOne
+ * @property Product $product m:hasOne
+ * @property User $user m:hasOne
  */
 class ProductReview extends Entity implements \Nette\Security\Resource{
 

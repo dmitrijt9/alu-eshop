@@ -3,9 +3,13 @@
 namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Components\ProductCartForm\ProductCartFormFactory;
+use App\FrontModule\Components\ReviewForm\ReviewForm;
+use App\FrontModule\Components\ReviewForm\ReviewFormFactory;
+use App\Model\Entities\ProductReview;
 use App\FrontModule\Components\ProductCartForm\ProductCartForm;
 use App\FrontModule\Components\CartControl\CartControl;
 use App\Model\Facades\ProductsFacade;
+use App\Model\Facades\UsersFacade;
 use App\Model\Facades\WheelSizesFacade;
 use App\Model\Facades\CategoriesFacade;
 use Nette\Application\BadRequestException;
@@ -25,6 +29,10 @@ class ProductPresenter extends BasePresenter{
   private $wheelSizesFacade;
   /** @var CategoriesFacade $categoriesFacade */
   private $categoriesFacade;
+  /** @var ReviewFormFactory $reviewFormFactory */
+  private $reviewFormFactory;
+    /** @var UsersFacade $usersFacade */
+    private $usersFacade;
 
   /** @persistent */
   public $category;
@@ -37,11 +45,19 @@ class ProductPresenter extends BasePresenter{
   public function renderShow(string $url):void {
     try{
       $product = $this->productsFacade->getProductByUrl($url);
+      $reviews = $this->productsFacade->getProductReviews($product);
     }catch (\Exception $e){
       throw new BadRequestException('Produkt nebyl nalezen.');
     }
 
     $this->template->product = $product;
+    $this->template->reviews = $reviews;
+    $this->template->user = $this->getUser();
+    $this->template->canUserReview = $this->getUser()->isLoggedIn() && count(
+      array_filter($reviews, function($r) {
+          return $r->user->userId == $this->getUser()->getId();
+      })
+    ) == 0;
   }
 
   /**
@@ -72,6 +88,26 @@ class ProductPresenter extends BasePresenter{
     $this->template->products = $this->productsFacade->findProducts(array_merge(['order'=>'title'], $filter), $paginator->getOffset(), $paginator->getLength());
     $this->template->paginator = $paginator;
   }
+
+    public function createComponentReview():ReviewForm {
+        $form = $this->reviewFormFactory->create();
+        $form->onSubmit[]=function($form) {
+            try {
+                $values = $form->getValues();
+                $product = $this->productsFacade->getProduct($values['productId']);
+                $productReview = new ProductReview();
+                $productReview->assign($values, ['stars', 'text']);
+                $user = $this->usersFacade->getUser($this->getUser()->getId());
+                $productReview->product = $product;
+                $productReview->user = $user;
+                $this->productsFacade->saveProductReview($productReview);
+                $this->flashMessage('Hodnocení bylo uloženo.');
+            } catch(\Error $e) {
+                $this->flashMessage('Hodnocení se nepodařilo uložit.', 'error');
+            }
+        };
+        return $form;
+    }
 
  public function createComponentProductCartForm() {
      $form = $this->productCartFormFactory->create();
@@ -109,5 +145,13 @@ class ProductPresenter extends BasePresenter{
   public function injectCategoriesFacade(CategoriesFacade $categoriesFacade):void {
     $this->categoriesFacade=$categoriesFacade;
   }
+
+  public function injectReviewFormFactory(ReviewFormFactory $reviewFormFactory):void {
+    $this->reviewFormFactory=$reviewFormFactory;
+  }
+
+    public function injectUsersFacade(UsersFacade $usersFacade){
+        $this->usersFacade=$usersFacade;
+    }
   #endregion injections
 }

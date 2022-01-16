@@ -41,6 +41,7 @@ services:
 	- App\FrontModule\Components\ProductCartForm\ProductCartFormFactory
 	- App\FrontModule\Components\CartControl\CartControlFactory
 	- App\FrontModule\Components\UserLoginControl\UserLoginControlFactory
+	- App\FrontModule\Components\ReviewForm\ReviewFormFactory
 
 	- App\Model\Facades\CategoriesFacade
 	- App\Model\Facades\WheelSizesFacade
@@ -54,6 +55,7 @@ services:
 	- App\Model\Repositories\ForgottenPasswordRepository
 	- App\Model\Repositories\PermissionRepository
 	- App\Model\Repositories\ProductRepository
+	- App\Model\Repositories\ProductReviewRepository
 	- App\Model\Repositories\ResourceRepository
 	- App\Model\Repositories\RoleRepository
 	- App\Model\Repositories\UserRepository
@@ -61,6 +63,5 @@ services:
 	- App\Model\Repositories\CartItemRepository
 	- App\Model\Repositories\WheelSizeRepository
 	- App\Model\Repositories\WheelColorRepository
-	- App\Model\Repositories\ProductReviewRepository
 	- App\Model\Repositories\OrderRepository
 	- App\Model\Repositories\OrderItemRepository
