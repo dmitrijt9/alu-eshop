@@ -7,58 +7,95 @@ use App\Model\Entities\CartItem;
 use App\Model\Entities\User;
 use App\Model\Repositories\CartItemRepository;
 use App\Model\Repositories\CartRepository;
+use Dibi\DateTime;
 
-/**
- * Class CartFacade
- * @package App\Model\Facades
- */
 class CartFacade{
-  /** @var CartRepository $cartRepository */
-  private /*CartRepository*/ $cartRepository;
+    /** @var CartRepository $cartRepository */
+    private $cartRepository;
+    /** @var CartItemRepository $cartItemRepository */
+    private $cartItemRepository;
 
-  public function __construct(CartRepository $cartRepository, CartItemRepository $cartItemRepository){
-    $this->cartRepository=$cartRepository;
-    $this->cartItemRepository=$cartItemRepository;
-  }
+    /**
+     * Metoda vracející košík podle cartId
+     * @param int $id
+     * @return Cart
+     * @throws \Exception
+     */
+    public function getCartById(int $id):Cart {
+        return $this->cartRepository->find($id);
+    }
 
-  public function getCartById($id): Cart {
-      return $this->cartRepository->find($id);
-  }
+    /**
+     * Metoda vracející košík konkrétního uživatele
+     * @param User|int $user
+     * @return Cart
+     * @throws \Exception
+     */
+    public function getCartByUser($user):Cart {
+        if ($user instanceof User){
+            $user=$user->userId;
+        }
+        return $this->cartRepository->findBy(['user_id'=>$user]);
+    }
 
-  public function getCartByUser($user): Cart {
-      if ($user instanceof User) {
-          $user = $user->userId;
-      }
-      $this->cartRepository->findBy(['user_id'=>$user]);
-  }
+    /**
+     * Metoda pro smazání košíku konkrétního uživatele
+     * @param User|int $user
+     */
+    public function deleteCartByUser($user):void {
+        try{
+            $this->cartRepository->delete($this->getCartByUser($user));
+        }catch (\Exception $e){}
+    }
 
-  public function deleteCartByUser($user) {
-      if ($user instanceof User) {
-          $user = $user->userId;
-      }
-      try {
-          $this->cartRepository->delete($this->getCartByUser($user));
-      } catch (\Exception $e) {
+    /**
+     * Metoda pro smazání starých košíků
+     */
+    public function deleteOldCarts():void {
+        try{
+            $this->cartRepository->deleteOldCarts();
+        }catch (\Exception $e){}
+    }
 
-      }
-  }
+    /**
+     * Metoda vracející konkrétní CartItem
+     * @param int $cartItemId
+     * @return CartItem
+     * @throws \Exception
+     */
+    public function getCartItem(int $cartItemId):CartItem {
+        return $this->cartItemRepository->find($cartItemId);
+    }
 
-  /**
-   * Metoda pro uložení kosiku
-   * @param Cart &$cart
-   * @return bool - true, pokud byly v DB provedeny nějaké změny
-   */
-  public function saveCart(Cart &$cart):bool {
-      $cart->lastModified = new \DateTime();
-    return (bool)$this->cartRepository->persist($cart);
-  }
+    /**
+     * Metoda pro uložení položky v košíku
+     * @param CartItem $cartItem
+     */
+    public function saveCartItem(CartItem $cartItem){
+        $this->cartItemRepository->persist($cartItem);
+    }
 
-  /**
-   * Metoda pro uložení polozky v kosiku
-   * @param CartItem &$cartItem
-   * @return bool - true, pokud byly v DB provedeny nějaké změny
-   */
-  public function saveCartItem(CartItem &$cartItem):bool {
-    return (bool)$this->cartItemRepository->persist($cartItem);
-  }
+    /**
+     * Metoda pro smazání položky košíku
+     * @param CartItem $cartItem
+     * @throws \LeanMapper\Exception\InvalidStateException
+     */
+    public function deleteCartItem(CartItem $cartItem){
+        $this->cartItemRepository->delete($cartItem);
+    }
+
+    /**
+     * Metoda pro uložení košíku, automaticky aktualizuje informaci o jeho poslední změně
+     * @param Cart $cart
+     */
+    public function saveCart(Cart $cart){
+        $cart->lastModified = new \DateTime();
+        $this->cartRepository->persist($cart);
+    }
+
+
+    public function __construct(CartRepository $cartRepository, CartItemRepository $cartItemRepository){
+        $this->cartRepository=$cartRepository;
+        $this->cartItemRepository=$cartItemRepository;
+    }
 }

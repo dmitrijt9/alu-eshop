@@ -1,4 +1,7 @@
-
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 --
 -- Struktura tabulky `product_review`
 --
@@ -44,3 +47,4 @@ INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `
 --
 INSERT INTO `resource` (`resource_id`) VALUES ('Front:ProductReview');
 INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `type`) VALUES (NULL, 'guest', 'Front:ProductReview', 'list', 'allow'), (NULL, 'authenticated', 'Front:ProductReview', 'list', 'allow');
+COMMIT;

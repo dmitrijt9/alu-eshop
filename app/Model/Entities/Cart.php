@@ -8,7 +8,7 @@ use LeanMapper\Entity;
  * Class Cart
  * @package App\Model\Entities
  * @property int $cartId
- * @property User $user m:hasOne
+ * @property int|null $userId = null
  * @property CartItem[] $items m:belongsToMany
  * @property \DateTime|null $lastModified
  *
@@ -23,6 +23,10 @@ class Cart extends Entity implements \Nette\Security\Resource{
      */
     function getResourceId():string{
         return 'Cart';
+    }
+
+    public function updateCartItems(){
+        $this->row->cleanReferencingRowsCache('cart_item');//smažeme cache, aby se položky v košíku znovu načetly z DB bez nutnosti načtení celého košíku
     }
 
     public function getTotalCount() {

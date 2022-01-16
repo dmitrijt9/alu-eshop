@@ -15,14 +15,15 @@
                 </p>
 
                 <span class="h5">Cena: {$product->price} Kč</span>
-                <form>
-                    <input type="hidden" name="productId" value="{$product->productId}" />
+{*                {control productCartForm}*}
+                <form n:name=productCartForm>
+                    <input type="hidden" n:name="productId" value="{$product->productId}" />
                     <div class="d-flex justify-content-between w-100 my-4">
                         <div class="col-5">
-                            <input type="number" class="form-control" name="count" value="1" />
+                            <input type="number" class="form-control" n:name="count" value="1" />
                         </div>
                         <div class="col d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">Vložit do košíku</button>
+                            <button type="submit" n:name="ok" class="btn btn-primary">Vložit do košíku</button>
                         </div>
                     </div>
                 </form>

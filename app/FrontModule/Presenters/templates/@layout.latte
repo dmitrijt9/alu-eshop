@@ -38,9 +38,9 @@
 					<a n:foreach="$categories as $category" class="dropdown-item" href="{plink Product:list, categoryId=>$category->categoryId}">{$category->title}</a>
 				</div>
 			</div>
-			<div class="ml-auto">
-				{control cart}
-				{control userLogin}
+			<div class="ml-auto d-inline-flex align-items-center">
+				<span>{control cart}</span>
+				<span class="ms-4">{control userLogin}</span>
 			</div>
 		</div>
 	</header>

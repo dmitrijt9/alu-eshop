@@ -3,6 +3,8 @@
 namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Components\ProductCartForm\ProductCartFormFactory;
+use App\FrontModule\Components\ProductCartForm\ProductCartForm;
+use App\FrontModule\Components\CartControl\CartControl;
 use App\Model\Facades\ProductsFacade;
 use App\Model\Facades\WheelSizesFacade;
 use App\Model\Facades\CategoriesFacade;
@@ -70,6 +72,26 @@ class ProductPresenter extends BasePresenter{
     $this->template->products = $this->productsFacade->findProducts(array_merge(['order'=>'title'], $filter), $paginator->getOffset(), $paginator->getLength());
     $this->template->paginator = $paginator;
   }
+
+ public function createComponentProductCartForm() {
+     $form = $this->productCartFormFactory->create();
+     $form->onSubmit[]=function(ProductCartForm $form){
+         try{
+             $product = $this->productsFacade->getProduct($form->values->productId);
+             //kontrola zakoupitelnosti
+         }catch (\Exception $e){
+             $this->flashMessage('Produkt nejde přidat do košíku','error');
+             $this->redirect('this');
+         }
+         //přidání do košíku
+         /** @var CartControl $cart */
+         $cart = $this->getComponent('cart');
+         $cart->addToCart($product, (int)$form->values->count);
+         $this->redirect('this');
+     };
+
+     return $form;
+ }
 
   #region injections
   public function injectProductsFacade(ProductsFacade $productsFacade):void {
