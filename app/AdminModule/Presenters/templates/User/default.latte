@@ -1,0 +1,28 @@
+{varType App\Model\Entities\User[] $users}
+{block content}
+
+<h1 n:block="title">Správa uživatelů</h1>
+{if !empty($users)}
+    <table class="table table-hover mt-4">
+        <thead>
+        <tr>
+            <th scope="col">Jméno</th>
+            <th scope="col" class="col-xl-1 col-md-2">Akce</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $users as $user}
+            <tr>
+                <td class="align-middle">{$user->name}</td>
+                <td class="text-nowrap align-middle">
+                    <a href="{link edit id=>$user->userId}" class="btn btn-sm btn-outline-success ">edit</a>
+                    <a href="{link delete id=>$user->userId}" class="btn btn-sm btn-outline-danger ">smazat</a>
+                </td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+
+{else}
+    <p class="text-muted">Nebyly nalezeni žádní uživatelé</p>
+{/if}
