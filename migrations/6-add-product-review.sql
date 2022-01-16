@@ -1,14 +1,17 @@
-
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 --
 -- Struktura tabulky `product_review`
 --
 
 CREATE TABLE `product_review` (
-                           `product_review_id` int(11) NOT NULL,
-                           `product_id` smallint(5) UNSIGNED DEFAULT NULL,
-                           `user_id` smallint(5) UNSIGNED DEFAULT NULL,
-                           `text` text COLLATE utf8mb4_czech_ci NOT NULL,
-                           `stars` int COLLATE utf8mb4_czech_ci NOT NULL
+                                  `product_review_id` int(11) NOT NULL,
+                                  `product_id` int(11) NOT NULL,
+                                  `user_id` int(11) DEFAULT NULL,
+                                  `text` text COLLATE utf8mb4_czech_ci DEFAULT NULL,
+                                  `stars` int COLLATE utf8mb4_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci COMMENT='Tabulka s recenzemi k produktum';
 
 
@@ -29,7 +32,7 @@ ALTER TABLE `product_review`
 --
 
 ALTER TABLE `product_review`
-    ADD CONSTRAINT `product_review_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE SET NULL,
+    ADD CONSTRAINT `product_review_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE,
     ADD CONSTRAINT `product_review_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL;
 
 
@@ -44,3 +47,4 @@ INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `
 --
 INSERT INTO `resource` (`resource_id`) VALUES ('Front:ProductReview');
 INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `type`) VALUES (NULL, 'guest', 'Front:ProductReview', 'list', 'allow'), (NULL, 'authenticated', 'Front:ProductReview', 'list', 'allow');
+COMMIT;
