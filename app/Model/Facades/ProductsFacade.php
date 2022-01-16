@@ -3,7 +3,9 @@
 namespace App\Model\Facades;
 
 use App\Model\Entities\Product;
+use App\Model\Entities\ProductReview;
 use App\Model\Repositories\ProductRepository;
+use App\Model\Repositories\ProductReviewRepository;
 use Nette\Http\FileUpload;
 use Nette\Utils\Strings;
 
@@ -14,6 +16,9 @@ use Nette\Utils\Strings;
 class ProductsFacade{
   /** @var ProductRepository $productRepository */
   private $productRepository;
+
+  /** @var ProductReviewRepository $productReviewRepository */
+  private $productReviewRepository;
 
   /**
    * Metoda pro získání jednoho produktu
@@ -121,7 +126,20 @@ class ProductsFacade{
         }
     }
 
-  public function __construct(ProductRepository $productRepository){
+    public function saveProductReview(ProductReview &$productReview) {
+        try {
+            return $this->productReviewRepository->persist($productReview);
+        } catch (\Exception $e) {
+            throw new \Error("Could not save product review.");
+        }
+    }
+
+    public function getProductReviews(Product &$product,int $offset=null,int $limit=null) {
+        return $this->productReviewRepository->findAllBy(['product_id' => $product->productId], $offset, $limit);
+    }
+
+  public function __construct(ProductRepository $productRepository, ProductReviewRepository  $productReviewRepository){
     $this->productRepository=$productRepository;
+    $this->productReviewRepository=$productReviewRepository;
   }
 }

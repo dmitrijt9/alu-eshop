@@ -46,7 +46,6 @@ class ProductPresenter extends BasePresenter{
     $paginator->setItemCount($productsCount);
     $paginator->setItemsPerPage(10);
     $paginator->setPage($page);
-
     $this->template->products = $this->productsFacade->findProducts(['order'=>'title'], $paginator->getOffset(), $paginator->getLength());
     $this->template->paginator = $paginator;
   }
