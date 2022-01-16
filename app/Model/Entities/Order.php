@@ -25,6 +25,8 @@ class Order extends Entity implements \Nette\Security\Resource{
     private $OrderStatuses = [
         'NEW' => 1,
         'ACCEPTED' => 2,
+        'OUT' => 3,
+        'CLOSED' => 4,
         'DECLINED' => 9,
     ];
     /**
@@ -63,6 +65,8 @@ class Order extends Entity implements \Nette\Security\Resource{
             case 'NEW': return 'Nová';
             case 'ACCEPTED': return 'Přijatá';
             case 'DECLINED': return 'Odmítnutá';
+            case 'OUT': return 'Odeslaná';
+            case 'CLOSED': return 'Uzavřená';
         }
     }
 

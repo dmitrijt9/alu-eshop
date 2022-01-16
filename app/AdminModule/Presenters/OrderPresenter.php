@@ -30,9 +30,11 @@ class OrderPresenter extends BasePresenter
             'status',
             'status',
             [
-                'NEW' => 'NEW',
-                'ACCEPTED' => 'ACCEPTED',
-                'DECLINED' => 'DECLINED'
+                'NEW' => 'Nová',
+                'ACCEPTED' => 'Přijatá',
+                'OUT' => 'Odeslaná',
+                'CLOSED' => 'Uzavřená',
+                'DECLINED' => 'Odmítnutá'
             ]
         );
         $form->addSubmit('changeStatus', 'Změnit stav');
