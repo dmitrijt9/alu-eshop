@@ -18,7 +18,9 @@
                 </p>
 
                 <span class="h5">Cena: {$product->price} Kč</span>
-{*                {control productCartForm}*}
+                <span class="h5">Velikost: {$product->wheelSize->size}</span>
+                <span class="h5">Barva: {$product->wheelColor->color}</span>
+
                 <form n:name=productCartForm>
                     <input type="hidden" n:name="productId" value="{$product->productId}" />
                     <div class="d-flex justify-content-between w-100 my-4">
