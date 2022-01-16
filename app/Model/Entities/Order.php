@@ -12,7 +12,7 @@ use LeanMapper\Entity;
  * @property int|null $userId = null
  * @property OrderItem[] $items m:belongsToMany
  * @property \DateTime|null $lastModified
- * @property string $status = CREATED
+ * @property string $status = NEW
  * @property string $userEmail
  * @property string $userName
  * @property string $userAddress
