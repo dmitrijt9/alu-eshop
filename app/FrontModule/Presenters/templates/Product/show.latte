@@ -1,4 +1,7 @@
 {varType App\Model\Entities\Product $product}
+{varType App\Model\Entities\ProductReview[] $reviews}
+{varType Nette\Security\User $user}
+{varType bool $canUserReview}
 {block content}
 <main class="container mt-4">
     <div class="row">
@@ -29,6 +32,41 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="d-flex flex-column w-100">
+        {foreach $reviews as $review}
+            <div class="alert alert-info my-3 p-4">
+                <span class="h5">Uživatel: {$review->user->name}</span>
+                <div class="d-flex my-1">
+                    {for $i = 0; $i < 5; $i++}
+                        <span n:class="$i < $review->stars ? 'fa fa-star checked' : 'fa fa-star'"></span>
+                    {/for}
+                </div>
+                <p>{$review->text}</p>
+            </div>
+        {/foreach}
+        {if $canUserReview}
+            <div class="alert alert-info my-3 p-4">
+                <span class="h5">Přidat hodnocení:</span>
+                <form n:name=review>
+                    <div class="d-flex flex-column">
+                        {for $i = 1; $i < 6; $i++}
+                            <label for="rad{$i}" class="form-label">
+                                <input id="rad{$i}" type="radio" n:name="stars" class="form-check-input" value="{$i}">
+                                {for $ii = 1; $ii < 6; $ii++}
+                                    <span n:class="$ii <= $i ? 'fa fa-star checked' : 'fa fa-star'"></span>
+                                {/for}
+                            </label>
+                        {/for}
+                    </div>
+                    <textarea n:name="text" class="form-control"></textarea>
+                    <input type="hidden" n:name="productId" value="{$product->productId}">
+                    <div class="d-flex mw-100 justify-content-center my-3">
+                        <button type="submit" class="btn btn-success" n:name="publish">Publikovat</button>
+                    </div>
+                </form>
+            </div>
+        {/if}
     </div>
 </main>
 

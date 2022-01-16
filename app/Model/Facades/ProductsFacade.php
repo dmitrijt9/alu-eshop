@@ -130,6 +130,7 @@ class ProductsFacade{
         try {
             return $this->productReviewRepository->persist($productReview);
         } catch (\Exception $e) {
+            throw $e;
             throw new \Error("Could not save product review.");
         }
     }
