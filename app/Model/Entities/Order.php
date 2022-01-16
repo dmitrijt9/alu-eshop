@@ -4,6 +4,7 @@ namespace App\Model\Entities;
 
 use LeanMapper\Entity;
 
+
 /**
  * Class Order
  * @package App\Model\Entities
@@ -21,6 +22,11 @@ use LeanMapper\Entity;
  */
 class Order extends Entity implements \Nette\Security\Resource{
 
+    private $OrderStatuses = [
+        'NEW' => 1,
+        'ACCEPTED' => 2,
+        'DECLINED' => 9,
+    ];
     /**
      * @inheritDoc
      */
@@ -51,4 +57,17 @@ class Order extends Entity implements \Nette\Security\Resource{
 
         return $totalPrice;
     }
+
+    public function getState() {
+        switch($this->status) {
+            case 'NEW': return 'Nová';
+            case 'ACCEPTED': return 'Přijatá';
+            case 'DECLINED': return 'Odmítnutá';
+        }
+    }
+
+    public function canChangeStatusTo(string $newStatus) {
+        return $this->OrderStatuses[$this->status] < $this->OrderStatuses[$newStatus];
+    }
 }
+

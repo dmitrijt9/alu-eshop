@@ -1,0 +1,43 @@
+{varType App\Model\Entities\Order $order}
+{block content}
+
+<h1 n:block="title">Objednávka číslo {$order->orderId}</h1>
+
+<div>Jméno uživatele: <span class="text-muted">{$order->userName}</span></div>
+<div>Email uživatele: <span class="text-muted">{$order->userEmail}</span></div>
+<div>Adresa: <span class="text-muted">{$order->userAddress}</span></div>
+<div>Cena: <span class="text-muted">{$order->totalPrice} Kč</span></div>
+<div>Stav: <span class="text-muted">{$orderState}</span></div>
+
+
+<table class="table table-hover">
+
+    <thead>
+    <td>Název položky</td>
+    <td>Cena</td>
+    <td>Počet položek</td>
+    </thead>
+    {foreach $order->items as $item}
+        <tr>
+            <td>{$item->product->title}</td>
+            <td>{$item->product->price} Kč</td>
+            <td>{$item->count} ks</td>
+        </tr>
+    {/foreach}
+
+</table>
+<form n:name=orderForm>
+    <div class="d-flex mt-4 align-items-center">
+        <span class="text-nowrap">Změnit stav:</span>
+        <div class="mx-2">
+            <select n:name="status" class="form-control">
+                <option value="NEW">Nová</option>
+                <option value="ACCEPTED">Přijatá</option>
+            </select>
+        </div>
+        <input type="hidden" n:name="orderId" value="{$order->orderId}">
+        <button type="submit" class="btn btn-primary" n:name="changeStatus">
+            <span class="text-nowrap">Změnit stav</span>
+        </button>
+    </div>
+</form>
