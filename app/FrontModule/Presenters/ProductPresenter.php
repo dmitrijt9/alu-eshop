@@ -101,8 +101,8 @@ class ProductPresenter extends BasePresenter{
                 $productReview->product = $product;
                 $productReview->user = $user;
                 $this->productsFacade->saveProductReview($productReview);
-                $this->flashMessage('Publikováno');
-            } catch(\Exception $e) {
+                $this->flashMessage('Hodnocení bylo uloženo.');
+            } catch(\Error $e) {
                 $this->flashMessage('Hodnocení se nepodařilo uložit.', 'error');
             }
         };

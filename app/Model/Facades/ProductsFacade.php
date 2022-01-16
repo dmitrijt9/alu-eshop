@@ -127,8 +127,8 @@ class ProductsFacade{
     }
 
     public function saveProductReview(ProductReview &$productReview) {
-        $existed = $this->productReviewRepository->findCountBy([ 'userId' => $productReview->user->userId, 'productId' => $productReview->product->productId ]);
-        if($existed !== 0) {
+        $existed = $this->productReviewRepository->findCountBy([ 'user_id' => $productReview->user->userId, 'product_id' => $productReview->product->productId ]);
+        if($existed > 0) {
             throw new \Error("Could not save product review.");
         }
         try {
