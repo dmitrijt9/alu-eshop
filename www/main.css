@@ -1,0 +1,10 @@
+
+
+.alu-jumbotron {
+    background: url('/img/alu-disky.jpg')  no-repeat center top fixed;
+}
+.alu-jumbotron .container {
+    backdrop-filter: blur(10px);
+    color: white;
+    -webkit-backdrop-filter: blur(10px);
+}
