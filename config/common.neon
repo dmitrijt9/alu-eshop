@@ -60,3 +60,4 @@ services:
 	- App\Model\Repositories\CartItemRepository
 	- App\Model\Repositories\WheelSizeRepository
 	- App\Model\Repositories\WheelColorRepository
+	- App\Model\Repositories\ProductReviewRepository
