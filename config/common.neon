@@ -63,6 +63,5 @@ services:
 	- App\Model\Repositories\CartItemRepository
 	- App\Model\Repositories\WheelSizeRepository
 	- App\Model\Repositories\WheelColorRepository
-	- App\Model\Repositories\ProductReviewRepository
 	- App\Model\Repositories\OrderRepository
 	- App\Model\Repositories\OrderItemRepository

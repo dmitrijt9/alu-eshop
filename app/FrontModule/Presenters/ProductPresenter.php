@@ -92,15 +92,19 @@ class ProductPresenter extends BasePresenter{
     public function createComponentReview():ReviewForm {
         $form = $this->reviewFormFactory->create();
         $form->onSubmit[]=function($form) {
-            $values = $form->getValues();
-            $product = $this->productsFacade->getProduct($values['productId']);
-            $productReview = new ProductReview();
-            $productReview->assign($values, ['stars', 'text']);
-            $user = $this->usersFacade->getUser($this->getUser()->getId());
-            $productReview->product = $product;
-            $productReview->user = $user;
-            $this->productsFacade->saveProductReview($productReview);
-            $this->flashMessage('Publikováno','info');
+            try {
+                $values = $form->getValues();
+                $product = $this->productsFacade->getProduct($values['productId']);
+                $productReview = new ProductReview();
+                $productReview->assign($values, ['stars', 'text']);
+                $user = $this->usersFacade->getUser($this->getUser()->getId());
+                $productReview->product = $product;
+                $productReview->user = $user;
+                $this->productsFacade->saveProductReview($productReview);
+                $this->flashMessage('Publikováno');
+            } catch(\Exception $e) {
+                $this->flashMessage('Hodnocení se nepodařilo uložit.', 'error');
+            }
         };
         return $form;
     }
