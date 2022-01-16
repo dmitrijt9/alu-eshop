@@ -22,6 +22,7 @@ CREATE TABLE `order_item` (
                              `order_item_id` int(11) NOT NULL,
                              `product_id` int(11) NOT NULL,
                              `order_id` int(11) NOT NULL,
+                             `price` decimal(10,2) NOT NULL,
                              `count` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 

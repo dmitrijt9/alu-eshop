@@ -1,5 +1,36 @@
+{varType App\Model\Entities\Cart $cart}
+
 {block content}
 
-<h1 n:block="title">Objednavka</h1>
+<h1 n:block="title">Nová objednávka</h1>
 
-{control orderForm}
+<div class="mt-4">
+    <h2>Položky</h2>
+<table class="table table-hover">
+
+    {foreach $cart->items as $item}
+        <tr>
+            <th>{$item->product->title}</th>
+            <td>{$item->count} Ks</td>
+            <td>{$item->product->price} Kč</td>
+            <td class="fw-bold">{$item->product->price * $item->count} Kč</td>
+            <td>
+                <a href="{plink cart:remove! $item->cartItemId}">odebrat</a>
+            </td>
+        </tr>
+    {/foreach}
+
+</table>
+</div>
+
+<div class="w-100 d-flex flex-column p-4 align-items-end">
+    <div class="fw-bold h3 flex-grow-0">Celkem za zboží: {$cart->getTotalPrice()} Kč</div>
+    <div class="w-auto">Cena bez DPH: {$cart->getTotalPrice() * 0.79} Kč</div>
+</div>
+
+<div>
+    <h2>Kontaktní informace</h2>
+    {control orderForm}
+</div>
+
+

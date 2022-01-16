@@ -10,6 +10,7 @@ use LeanMapper\Entity;
  * @property int $orderItemId
  * @property Product $product m:hasOne
  * @property Order $order m:hasOne
+ * @property float $price
  * @property int $count = 0
  */
 class OrderItem extends Entity implements \Nette\Security\Resource{

@@ -5,6 +5,7 @@ namespace App\FrontModule\Components\CartControl;
 use App\Model\Entities\Cart;
 use App\Model\Entities\CartItem;
 use App\Model\Entities\Product;
+use App\Model\Entities\User;
 use App\Model\Facades\CartFacade;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Template;
@@ -55,6 +56,10 @@ class CartControl extends Control{
         $this->redirect('this');
     }
 
+    public function getCart() {
+        return $this->cart;
+    }
+
     /**
      * Metoda pro přidání produktu do košíku
      * @param Product $product
@@ -103,6 +108,10 @@ class CartControl extends Control{
      */
     public function unsetSessionCart():void {
         $this->cartSession->remove('cartId');
+    }
+
+    public function deleteUsersCart(int $userId) {
+        $this->cartFacade->deleteCartByUser($userId);
     }
 
     /**

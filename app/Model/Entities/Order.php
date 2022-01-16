@@ -15,7 +15,7 @@ use LeanMapper\Entity;
  * @property string $userEmail
  * @property string $userName
  * @property string $userAddress
- * @property int $totalPrice
+ * @property float $totalPrice
  *
  * @method addToItems(OrderItem $orderItem)
  */
@@ -45,7 +45,7 @@ class Order extends Entity implements \Nette\Security\Resource{
 
         if (!empty($this->items)) {
             foreach ($this->items as $item) {
-                $totalPrice+=$item->product->price*$item->count;
+                $totalPrice+=$item->price*$item->count;
             }
         }
 

@@ -1,0 +1,43 @@
+{varType App\Model\Entities\Order $order}
+
+{block content}
+
+<h1 class="h1">Přehled objednávky</h1>
+
+<p>Vaší objednávku jsme úspěšně vytvořili. Zde je její přehled.</p>
+<p>Vyčkejte na náš email s dalšími pokyny.</p>
+
+<div>
+    <div class="mt-4">
+        <h2>Položky</h2>
+        <table class="table table-hover">
+
+            {foreach $order->items as $item}
+                <tr>
+                    <th>{$item->product->title}</th>
+                    <td>{$item->count} Ks</td>
+                    <td>{$item->product->price} Kč</td>
+                    <td class="fw-bold">{$item->product->price * $item->count} Kč</td>
+                </tr>
+            {/foreach}
+
+        </table>
+    </div>
+
+    <div class="w-100 d-flex flex-column p-4 align-items-end">
+        <div class="fw-bold h3 flex-grow-0">Celkem za zboží: {$order->getTotalPrice()} Kč</div>
+        <div class="w-auto">Cena bez DPH: {$order->getTotalPrice() * 0.79} Kč</div>
+    </div>
+
+    <div>
+        <h2>Kontaktní informace</h2>
+        <div class="mt-2 d-flex flex-column">
+            <div>Jméno: {$order->userName}</div>
+            <div>E-mail: {$order->userEmail}</div>
+            <div>Adresa: {$order->userAddress}</div>
+        </div>
+    </div>
+</div>
+
+
+
