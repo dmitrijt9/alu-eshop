@@ -87,7 +87,7 @@ class WheelSizeEditForm extends Form{
     if ($values instanceof WheelSize){
       $values = [
         'wheelSizeId'=>$values->wheelSizeId,
-        'title'=>$values->size,
+        'size'=>$values->size,
         'description'=>$values->description
       ];
     }
