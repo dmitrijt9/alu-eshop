@@ -117,6 +117,7 @@ class CartControl extends Control{
      * Metoda pro přípravu košíku uloženého v DB
      */
     private function prepareCart():Cart {
+        $cart=null;
         #region zkusíme najít košík podle ID ze session
         try {
             if ($cartId = $this->cartSession->get('cartId')){
