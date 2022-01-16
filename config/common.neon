@@ -48,6 +48,7 @@ services:
 	- App\Model\Facades\ProductsFacade
 	- App\Model\Facades\UsersFacade
 	- App\Model\Facades\CartFacade
+	- App\Model\Facades\OrderFacade
 
 	- App\Model\Repositories\CategoryRepository
 	- App\Model\Repositories\ForgottenPasswordRepository
@@ -61,3 +62,5 @@ services:
 	- App\Model\Repositories\WheelSizeRepository
 	- App\Model\Repositories\WheelColorRepository
 	- App\Model\Repositories\ProductReviewRepository
+	- App\Model\Repositories\OrderRepository
+	- App\Model\Repositories\OrderItemRepository
