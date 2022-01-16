@@ -1,0 +1,25 @@
+{varType App\Model\Entities\Order[] $orders}
+{block content}
+<table class="table table-hover">
+
+    <thead>
+        <td>ID objednávky</td>
+        <td>Jméno uživatele</td>
+        <td>Cena</td>
+        <td>Počet položek</td>
+        <td>
+        </td>
+    </thead>
+    {foreach $orders as $order}
+        <tr>
+            <td>{$order->orderId}</td>
+            <td>{$order->userName}</td>
+            <td>{$order->getTotalPrice()} Kč</td>
+            <td>{$order->getTotalCount()} ks</td>
+            <td>
+                <a href="{link edit $order->orderId}">detail</a>
+            </td>
+        </tr>
+    {/foreach}
+
+</table>

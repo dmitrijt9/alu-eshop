@@ -40,6 +40,16 @@ class OrderFacade{
         $this->orderRepository->persist($order);
     }
 
+    /**
+     * Metoda pro vyhledání objednávek
+     * @param array|null $params = null
+     * @param int $offset = null
+     * @param int $limit = null
+     * @return Order[]
+     */
+    public function findCategories(array $params=null,int $offset=null,int $limit=null):array {
+        return $this->orderRepository->findAllBy($params,$offset,$limit);
+    }
 
     public function __construct(OrderRepository $orderRepository, OrderItemRepository $orderItemRepository){
         $this->orderRepository=$orderRepository;
