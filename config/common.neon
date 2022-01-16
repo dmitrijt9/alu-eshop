@@ -42,6 +42,7 @@ services:
 	- App\FrontModule\Components\CartControl\CartControlFactory
 	- App\FrontModule\Components\UserLoginControl\UserLoginControlFactory
 	- App\FrontModule\Components\ReviewForm\ReviewFormFactory
+	- App\FrontModule\Components\OrderForm\OrderFormFactory
 
 	- App\Model\Facades\CategoriesFacade
 	- App\Model\Facades\WheelSizesFacade

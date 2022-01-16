@@ -2,6 +2,7 @@
 
 namespace App\FrontModule\Presenters;
 
+use App\FrontModule\Components\CartControl\CartControl;
 use App\FrontModule\Components\ForgottenPasswordForm\ForgottenPasswordForm;
 use App\FrontModule\Components\ForgottenPasswordForm\ForgottenPasswordFormFactory;
 use App\FrontModule\Components\NewPasswordForm\NewPasswordForm;
@@ -43,6 +44,9 @@ class UserPresenter extends BasePresenter{
   public function actionLogout(){
     if ($this->user->isLoggedIn()){
       $this->user->logout();
+      /** @var CartControl $cart */
+      $cart = $this->getComponent('cart');
+      $cart->unsetSessionCart();
     }
     $this->redirect('Homepage:default');
   }

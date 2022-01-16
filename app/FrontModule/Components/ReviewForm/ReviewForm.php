@@ -4,9 +4,8 @@ namespace App\FrontModule\Components\ReviewForm;
 
 use Nette;
 use Nette\Application\UI\Form;
-use Nette\Forms\Controls\SubmitButton;
 use Nette\SmartObject;
-use Nextras\FormsRendering\Renderers\Bs4FormRenderer;
+use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
 
 /**
@@ -32,7 +31,7 @@ class ReviewForm extends Form{
      */
     public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null){
         parent::__construct($parent, $name);
-        $this->setRenderer(new Bs4FormRenderer(FormLayout::VERTICAL));
+        $this->setRenderer(new Bs5FormRenderer(FormLayout::VERTICAL));
         $this->createSubcomponents();
     }
 

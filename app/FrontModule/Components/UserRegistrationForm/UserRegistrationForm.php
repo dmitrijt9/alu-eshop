@@ -2,14 +2,13 @@
 
 namespace App\FrontModule\Components\UserRegistrationForm;
 
-use App\Model\Entities\Category;
 use App\Model\Entities\User;
 use App\Model\Facades\UsersFacade;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SubmitButton;
 use Nette\SmartObject;
-use Nextras\FormsRendering\Renderers\Bs4FormRenderer;
+use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
 
 /**
@@ -41,7 +40,7 @@ class UserRegistrationForm extends Form{
    */
   public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, UsersFacade $usersFacade, Nette\Security\Passwords $passwords){
     parent::__construct($parent, $name);
-    $this->setRenderer(new Bs4FormRenderer(FormLayout::VERTICAL));
+    $this->setRenderer(new Bs5FormRenderer(FormLayout::VERTICAL));
     $this->usersFacade=$usersFacade;
     $this->passwords=$passwords;
     $this->createSubcomponents();

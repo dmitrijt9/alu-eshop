@@ -7,7 +7,7 @@ use App\Model\Facades\ProductsFacade;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\SmartObject;
-use Nextras\FormsRendering\Renderers\Bs4FormRenderer;
+use Nextras\FormsRendering\Renderers\Bs5FormRenderer;
 use Nextras\FormsRendering\Renderers\FormLayout;
 
 /**
@@ -34,7 +34,7 @@ class ProductCartForm extends Form{
   public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, ProductsFacade $productsFacade){
     parent::__construct($parent, $name);
     $this->productsFacade = $productsFacade;
-    $this->setRenderer(new Bs4FormRenderer(FormLayout::HORIZONTAL));
+    $this->setRenderer(new Bs5FormRenderer(FormLayout::HORIZONTAL));
     $this->createSubcomponents();
   }
 
@@ -52,19 +52,6 @@ class ProductCartForm extends Form{
       ->addRule(Form::RANGE,'Chybný počet kusů.',[1,100]);
 
     $this->addSubmit('ok','přidat do košíku');
-//      ->onClick[]=function(SubmitButton $button){
-//        //uložení nového hesla
-//        $values=$this->getValues('array');
-//
-//        try{
-//            $product = $this->productsFacade->getProduct($values['productId']);
-//            $this->cartControl->addToCart($product, $values['count']);
-//        }catch (\Exception $e){
-//            $this->onFailed('Zvolený produkt nebyl nalezen.');
-//            return;
-//        }
-//        $this->onFinished('Produkt byl pridan do kosiku.');
-//      };
   }
 
 }
