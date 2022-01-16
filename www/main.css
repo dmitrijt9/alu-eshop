@@ -8,3 +8,8 @@
     color: white;
     -webkit-backdrop-filter: blur(10px);
 }
+
+.product:hover {
+    transform: scale(1.02);
+    transition: 1s;
+}

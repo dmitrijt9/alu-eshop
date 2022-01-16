@@ -1,11 +1,33 @@
 {varType App\Model\Entities\Product $product}
 {block content}
+<main class="container mt-4">
+    <div class="row">
+        <div class="col-12 col-md-6 p-3">
+            <img class="mw-100 shadow p-2" src="/img/products/{$product->productId}.{$product->photoExtension}" alt="{$product->title}" style="object-fit: contain">
+        </div>
 
-<h1 n:block="title">{$product->title}</h1>
+        <div class="col-12 col-md-6 p-3 h-100">
+            <div class="alert alert-info d-flex align-items-starts flex-column">
+                <h1 n:block="title" class="text-center">{$product->title}</h1>
 
-<p>
-    {$product->description}
-</p>
+                <p>
+                    {$product->description}
+                </p>
 
-<span class="h5">Cena: {$product->price} Kč</span>
-<a href="{plink Product:show url=>$product->url}" class="btn btn-primary ml-2">Vložit do košíku</a>
+                <span class="h5">Cena: {$product->price} Kč</span>
+                <form>
+                    <input type="hidden" name="productId" value="{$product->productId}" />
+                    <div class="d-flex justify-content-between w-100 my-4">
+                        <div class="col-5">
+                            <input type="number" class="form-control" name="count" value="1" />
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Vložit do košíku</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
