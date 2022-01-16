@@ -20,7 +20,7 @@
     {foreach $order->items as $item}
         <tr>
             <td>{$item->product->title}</td>
-            <td>{$item->product->price} Kč</td>
+            <td>{$item->price} Kč</td>
             <td>{$item->count} ks</td>
         </tr>
     {/foreach}
