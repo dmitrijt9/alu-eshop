@@ -69,7 +69,7 @@ class UserPresenter extends BasePresenter{
 
         $form=$this->getComponent('userEditForm');
         $form->setDefaults($user);
-        $this->template->user=$user;
+        $this->template->editedUser=$user;
     }
 
     /**

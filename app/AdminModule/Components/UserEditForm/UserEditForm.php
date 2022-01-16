@@ -59,7 +59,9 @@ class UserEditForm extends Form{
             ->setRequired('Zadejte platný email')
             ->addRule(function(Nette\Forms\Controls\TextInput $input){
                 try{
-                    $this->usersFacade->getUserByEmail($input->value);
+                    if (!$this->values->userId) {
+                        $this->usersFacade->getUserByEmail($input->value);
+                    }
                 }catch (\Exception $e){
                     //pokud nebyl uživatel nalezen (tj. je vyhozena výjimka), je to z hlediska registrace v pořádku
                     return true;

@@ -1,7 +1,7 @@
-{varType App\Model\Entities\User $user}
+{varType App\Model\Entities\User $editedUser}
 {block content}
 
-<h1 n:block="title">Úprava uživatele {$user->name}</h1>
+<h1 n:block="title">Úprava uživatele {$editedUser->name}</h1>
 
 
 {control userEditForm}
