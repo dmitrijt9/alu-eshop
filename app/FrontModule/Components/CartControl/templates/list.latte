@@ -21,5 +21,10 @@
 
     </table>
 
+    <div class="w-100 border-top border-1 d-flex flex-column p-4 align-items-end">
+        <div class="fw-bold h3 flex-grow-0">Celkem za zbozi: {$cart->getTotalPrice()} Kč</div>
+        <div class="w-auto">Cena bez DPH: {$cart->getTotalPrice() * 0.79} Kč</div>
+        <div><a href="{plink Order:default}" class="btn btn-primary mt-2">Prejit k objednavce</a></div>
+    </div>
 
 {/if}
