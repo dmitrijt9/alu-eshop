@@ -80,7 +80,7 @@ class UserEditForm extends Form{
             if (!empty($values['userId'])) {
                 try {
                     $user = $this->usersFacade->getUser($values['userId']);
-                    $role = $this->roleRepository->findBy(['role_id' => $values['roleId'] ]);
+                    $role = $this->roleRepository->findBy(['role_id' => $values['role'] ]);
                     $values['role'] = $role;
                 } catch (\Exception $e) {
                     $this->onFailed('Požadovaný uživatel nebyl nalezen.');

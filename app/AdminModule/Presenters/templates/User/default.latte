@@ -11,12 +11,12 @@
         </tr>
         </thead>
         <tbody>
-        {foreach $users as $user}
+        {foreach $users as $u}
             <tr>
-                <td class="align-middle">{$user->name}</td>
+                <td class="align-middle">{$u->name}</td>
                 <td class="text-nowrap align-middle">
-                    <a href="{link edit id=>$user->userId}" class="btn btn-sm btn-outline-success ">edit</a>
-                    <a href="{link delete id=>$user->userId}" class="btn btn-sm btn-outline-danger ">smazat</a>
+                    <a href="{link edit id=>$u->userId}" class="btn btn-sm btn-outline-success ">edit</a>
+                    <a href="{link delete id=>$u->userId}" class="btn btn-sm btn-outline-danger ">smazat</a>
                 </td>
             </tr>
         {/foreach}
