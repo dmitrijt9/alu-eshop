@@ -4,7 +4,7 @@
 {varType int $wheelSize}
 {block content}
 <h1 n:block="title">Katalog produktů</h1>
-<h4 class="mt-5" n:if="$category->title">Kategorie: {$category->title}</h4>
+<h4 class="mt-5" n:if="$category">Kategorie: {$category->title}</h4>
 
 <div class="mr-3 d-flex mb-4">
     <span>Filtrovat dle velikosti: </span>
