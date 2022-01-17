@@ -83,7 +83,12 @@ class OrderPresenter extends BasePresenter{
             //smazani košíku
             /** @var CartControl $cart */
             $cart = $this->getComponent('cart');
-            $cart->deleteUsersCart($this->user->getId());
+            if($this->user->isLoggedIn()) {
+                $cart->deleteUsersCart($this->user->getId());
+            } else {
+                $cart->unsetSessionCart();
+            }
+
             $this->redirect('Order:success', ["orderId" => $order->orderId]);
         };
 
