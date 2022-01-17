@@ -5,6 +5,7 @@ namespace App\AdminModule\Components\UserEditForm;
 use App\Model\Entities\User;
 use App\Model\Facades\CategoriesFacade;
 use App\Model\Facades\UsersFacade;
+use App\Model\Repositories\RoleRepository;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\SubmitButton;
@@ -34,6 +35,8 @@ class UserEditForm extends Form{
     private $categoriesFacade;
     /** @var UsersFacade $usersFacade */
     private $usersFacade;
+    /** @var RoleRepository $roleRepository */
+    private $roleRepository;
 
     /**
      * TagEditForm constructor.
@@ -42,11 +45,12 @@ class UserEditForm extends Form{
      * @param UsersFacade $usersFacade
      * @noinspection PhpOptionalBeforeRequiredParametersInspection
      */
-    public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, CategoriesFacade $categoriesFacade, UsersFacade $usersFacade){
+    public function __construct(Nette\ComponentModel\IContainer $parent = null, string $name = null, CategoriesFacade $categoriesFacade, UsersFacade $usersFacade, RoleRepository $roleRepository){
         parent::__construct($parent, $name);
         $this->setRenderer(new Bs4FormRenderer(FormLayout::VERTICAL));
         $this->categoriesFacade=$categoriesFacade;
         $this->usersFacade=$usersFacade;
+        $this->roleRepository=$roleRepository;
         $this->createSubcomponents();
     }
 
@@ -68,13 +72,16 @@ class UserEditForm extends Form{
                 }
                 return false;
             },'Uživatel s tímto e-mailem je již registrován.');
-        $this->addSelect('role', 'Role', ['admin' => 'admin', 'guest'=>'guest']);
+        $this->addHidden('userId');
+        $this->addSelect('roleId', 'Role', ['superadmin' => 'superadmin', 'admin' => 'admin', 'guest'=>'guest']);
         $this->addSubmit('ok','uložit')
             ->onClick[]=function(SubmitButton $button) {
             $values = $this->getValues('array');
             if (!empty($values['userId'])) {
                 try {
                     $user = $this->usersFacade->getUser($values['userId']);
+                    $role = $this->roleRepository->findBy(['role_id' => $values['roleId'] ]);
+                    $values['role'] = $role;
                 } catch (\Exception $e) {
                     $this->onFailed('Požadovaný uživatel nebyl nalezen.');
                     return;
@@ -85,6 +92,7 @@ class UserEditForm extends Form{
             }
             $user->assign($values, ['name', 'email', 'role']);
             $this->usersFacade->saveUser($user);
+            $this->onFinished('Uživatel byl upraven');
         };
     }
 
@@ -97,6 +105,7 @@ class UserEditForm extends Form{
     public function setDefaults($values, bool $erase = false):self {
         if ($values instanceof User){
             $values = [
+                'userId'=>$values->userId,
                 'name'=>$values->name,
                 'email'=>$values->email,
                 'role'=>$values->role->roleId,
