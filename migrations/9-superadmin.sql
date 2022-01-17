@@ -1,4 +1,4 @@
-INSERT INTO role (role_id) VALUES ('superadmin')
+INSERT INTO role (role_id) VALUES ('superadmin');
 
 INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `type`) VALUES
     (NULL, 'superadmin', 'Admin:Category', '', 'allow'),
@@ -19,7 +19,7 @@ INSERT INTO `permission` (`permission_id`, `role_id`, `resource_id`, `action`, `
     (NULL, 'superadmin', 'Order', '', 'allow'),
     (NULL, 'superadmin', 'Admin:Order', '', 'allow');
 
-DELETE * FROM `permission` WHERE `role_id`='admin' AND `resource_id`='Admin:User'
+DELETE FROM `permission` WHERE `role_id`='admin' AND `resource_id`='Admin:User';
 
 
 
