@@ -1,4 +1,82 @@
+{varType App\Model\Entities\Order[] $newOrders}
+{var $newOrdersCount = sizeof($newOrders)}
 {block content}
 <h1 class="h1">
     Administrace ALU eshop
 </h1>
+
+<div class="mt-4 d-flex flex-wrap w-100 mx-auto">
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:Product','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                </svg>
+                produkty
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj produkty</p>
+            <a href="{plink Product:default}" class="btn btn-primary">Přejít na produkty</a>
+        </div>
+    </div>
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:Category','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                kategorie
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj kategorie</p>
+            <a href="{plink Category:default}" class="btn btn-primary">Přejít na kategorie</a>
+        </div>
+    </div>
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:WheelSize','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                velikosti kol
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj velikosti kol</p>
+            <a href="{plink WheelSize:default}" class="btn btn-primary">Přejít na velikosti kol</a>
+        </div>
+    </div>
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:WheelColor','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+                barvy kol
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj barvy kol</p>
+            <a href="{plink WheelColor:default}" class="btn btn-primary">Přejít na barvy kol</a>
+        </div>
+    </div>
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:Order','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                objednávky <span class="mx-1 badge bg-warning">{$newOrdersCount}</span>
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj objednávky</p>
+            <a href="{plink Order:default}" class="btn btn-primary">Přejít na objednávky</a>
+        </div>
+    </div>
+    <div class="card bg-light m-2" style="width: 18rem;" n:if="$user->isAllowed('Admin:User','default')">
+        <div class="card-body">
+            <h5 class="card-title align-items-center d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 1.5rem;height: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                uživatele
+            </h5>
+            <p class="card-text">Přidávej, upravuj, odstraňuj uživatele</p>
+            <a href="{plink User:default}" class="btn btn-primary">Přejít na uživatele</a>
+        </div>
+    </div>
+
+</div>

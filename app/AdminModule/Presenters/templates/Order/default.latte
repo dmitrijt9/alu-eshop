@@ -8,7 +8,9 @@
         <td>Cena</td>
         <td>Počet položek</td>
         <td>
+            Stav
         </td>
+        <td></td>
     </thead>
     {foreach $orders as $order}
         <tr>
@@ -16,6 +18,7 @@
             <td>{$order->userName}</td>
             <td>{$order->getTotalPrice()} Kč</td>
             <td>{$order->getTotalCount()} ks</td>
+            <td>{$order->getState()}</td>
             <td>
                 <a href="{link edit $order->orderId}">detail</a>
             </td>

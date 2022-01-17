@@ -20,7 +20,7 @@ class OrderPresenter extends BasePresenter
      */
     public function renderDefault(): void
     {
-        $this->template->orders = $this->orderFacade->findCategories(['order' => 'last_modified']);
+        $this->template->orders = $this->orderFacade->findOrders(['order' => 'last_modified']);
     }
 
     public function createComponentOrderForm(): Form
