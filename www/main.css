@@ -1,8 +1,8 @@
 
 
-.alu-jumbotron {
-    background: url('/img/alu-disky.jpg')  no-repeat center top fixed;
-}
+/*.alu-jumbotron {*/
+/*    background: url('/img/alu-disky.jpg')  no-repeat center top fixed;*/
+/*}*/
 .alu-jumbotron .container {
     height: 100%;
     backdrop-filter: blur(10px);
