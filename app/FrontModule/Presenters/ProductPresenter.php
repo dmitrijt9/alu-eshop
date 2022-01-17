@@ -67,6 +67,8 @@ class ProductPresenter extends BasePresenter{
     $productsCount = $this->productsFacade->findProductsCount();
     $filter = [];
 
+    $this->template->category = null;
+    $this->template->wheelSize = null;
     if($this->getParameter('categoryId') !== null) {
         $category = $this->categoriesFacade->getCategory($this->getParameter('categoryId'));
         $this->template->category = $category;
