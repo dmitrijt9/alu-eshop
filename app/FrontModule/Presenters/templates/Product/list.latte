@@ -9,7 +9,7 @@
 <div class="mr-3 d-flex mb-4">
     <span>Filtrovat dle velikosti: </span>
     <div class="mx-2" n:foreach="$wheelSizes as $ws">
-        <a n:class="$wheelSize==$ws->wheelSizeId ? 'badge rounded-pill bg-info' : 'badge rounded-pill bg-secondary'" href="{plink Product:list, categoryId=>$category->categoryId, wheelSize=>$ws->wheelSizeId }"><div class="p-1">{$ws->size}</div></a>
+        <a n:class="$wheelSize==$ws->wheelSizeId ? 'badge rounded-pill bg-info' : 'badge rounded-pill bg-secondary'" href="{plink Product:list, categoryId=>$category != null ? $category->categoryId : null, wheelSize=>$ws->wheelSizeId }"><div class="p-1">{$ws->size}</div></a>
     </div>
 </div>
 <section class="row" n:if="!empty($products)">
