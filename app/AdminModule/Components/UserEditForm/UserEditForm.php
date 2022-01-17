@@ -73,7 +73,7 @@ class UserEditForm extends Form{
                 return false;
             },'Uživatel s tímto e-mailem je již registrován.');
         $this->addHidden('userId');
-        $this->addSelect('roleId', 'Role', ['superadmin' => 'superadmin', 'admin' => 'admin', 'guest'=>'guest']);
+        $this->addSelect('role', 'Role', ['superadmin' => 'superadmin', 'admin' => 'admin', 'guest'=>'guest']);
         $this->addSubmit('ok','uložit')
             ->onClick[]=function(SubmitButton $button) {
             $values = $this->getValues('array');
