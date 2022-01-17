@@ -27,11 +27,25 @@
     </div>
 </div>
 
-{*<div class="container mt-4">*}
-{*    <h2 class="display-3">Nabídka kol</h2>*}
-{*    <div class="row">*}
-{*        <div n:foreach="$filteredProducts as $p"  class="col-sm border border-primary rounded m-4">*}
-{*            {$p->title}*}
-{*        </div>*}
-{*    </div>*}
-{*</div>*}
+<div class="container mt-5 mx-auto w-75">
+    <h2 class="h2">Zbrusu nová kola</h2>
+    <section class="row mt-2" n:if="!empty($products)">
+        {foreach $products as $product}
+            <div class="col-md-6 col-lg-4 shadow alert-light m-3 product">
+                <a class="w-100 h-100 text-decoration-none" href="{plink Product:show url=>$product->url}">
+                    <div class="d-flex flex-column align-items-center justify-content-center p-3 text-decoration-none" style="color: black">
+                        <img class="" width="150px" height="150px" src="/img/products/{$product->productId}.{$product->photoExtension}" alt="{$product->title}" style="object-fit: contain">
+                        <span class="h4">{$product->title}</span>
+                        <span class="fs-4 fw-bold">Cena: {$product->price} Kč</span>
+                        <span class="text-muted mw-100 overflow-hidden" style="text-overflow: ellipsis; max-height: 50px;">{$product->description}</span>
+                    </div>
+                </a>
+            </div>
+        {/foreach}
+
+    </section>
+    <div class="d-flex justify-content-center mt-2">
+        <a href="{plink Product:list}" class="btn btn-primary w-auto">Zobrazit všechna kola</a>
+    </div>
+
+</div>
