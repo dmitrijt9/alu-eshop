@@ -36,7 +36,7 @@
 						Kategorie
 					</a>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					<a n:foreach="$categories as $category" class="dropdown-item" href="{plink Product:list, categoryId=>$category->categoryId}">{$category->title}</a>
+					<a n:foreach="$categories as $c" class="dropdown-item" href="{plink Product:list, categoryId=>$c->categoryId}">{$c->title}</a>
 				</div>
 			</div>
 			<div class="ml-auto d-inline-flex align-items-center">
